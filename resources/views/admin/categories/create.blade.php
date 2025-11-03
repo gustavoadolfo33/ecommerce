@@ -1,0 +1,63 @@
+<x-admin-layout :breadcrumbs="[
+    [
+        'name' => 'dashboard',
+        'route' => route('admin.dashboard'),
+        
+    ],
+    [
+        'name' => 'Categorias',
+        'rute' => route('admin.categories.index'),
+    ],
+    [
+        'name' => 'Nuevo',
+    ]
+    ]">
+    <form action="{{route('admin.categories.store')}}" method="POST">
+
+        @csrf
+        <div class="card">
+
+            <x-validation-errors class="mb-4" />
+
+            <div class="mb-4">
+
+                <x-label class="mb-2">
+                    Familia
+                </x-label>
+                <x-select name="family_id" id="family_id" class=" w-full">
+                    <option value="" disabled selected class="text-gray-400">Seleccione una familia...</option>
+                    @foreach ($families as $family)
+                        
+                        <option value="{{ $family->id }}" {{ old('family_id') == $family->id ? 'selected' : '' }}
+                            @selected(old('family_id') == $family->id)>
+
+                            {{ $family->name }}
+                        </option>
+                    
+                    @endforeach
+                </x-select>
+
+            </div>
+
+             <div class="mb-4">
+                <x-label class="mb-2">Nombre</x-label>
+                <x-input class="w-full" 
+                        placeholder="ingrese el nombre de la Categoria"
+                        name="name"
+                        value="{{old('name')}}"
+                />
+                    
+            </div>
+            <div class="flex justify-end">
+                <x-button>
+                    Guardar
+                </x-button>
+            </div>
+
+        </div>
+        
+
+    </form>
+    
+
+</x-admin-layout>
